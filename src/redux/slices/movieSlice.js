@@ -3,38 +3,52 @@ import {movieService} from "../../services/movie.service";
 
 const initialState = {
     movies: [],
-    selectedMovie:null
+    page: 1
 };
-const getAll = createAsyncThunk('movieSlice/getAll',
-    async (_, thunkAPI) => {
-        const {rejectWithValue}=thunkAPI;
+
+const getAllMovies = createAsyncThunk(
+    'movieSlice/getAllMovies',
+    async (page, {rejectedWithValue}) => {
         try {
-        const {data} = await movieService.getAll();
-        return data
-    } catch (e) {
-        return rejectWithValue(e.response.data)
+            const {data} = await movieService.getAll(page);
+            return data
+        } catch (e) {
+            rejectedWithValue(e.response.data)
+        }
     }
-})
+);
+
 
 const movieSlice = createSlice({
-    name: "movieSlice", reducers: {
-        setSelectedMovie:(state,action)=>{
-            state.selectedMovie=action.payload
+    name: 'movieSlice',
+    initialState,
+    reducers: {
+        nextPage: (state, action) => {
+            if (state.page < 500) {
+                state.page += action.payload
+            }
+        },
+        prevPage: (state, action) => {
+            if (state.page > 1){state.page -= action.payload}
         }
-    }, initialState, extraReducers: (builder) => {
+
+    },
+    extraReducers: builder =>
         builder
-            .addCase(getAll.fulfilled, (state, action) => {
+            .addCase(getAllMovies.fulfilled, (state, action) => {
                 state.movies = action.payload
             })
-    }
-})
-const {reducer: movieReducer,actions:{setSelectedMovie}} = movieSlice;
+});
+
+const {reducer: movieReducer, actions: {nextPage,prevPage}}=movieSlice;
 
 const movieActions = {
-    getAll,
-    setSelectedMovie
-}
+    getAllMovies,
+    nextPage,
+    prevPage
 
+}
 export {
-    movieSlice, movieReducer, movieActions
+    movieReducer,
+    movieActions
 }

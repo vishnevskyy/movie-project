@@ -3,7 +3,7 @@ import {movieService} from "../../services/movie.service";
 
 const initialState = {
     movies: [],
-    page: 1
+    page: 8
 };
 
 const getAllMovies = createAsyncThunk(
@@ -11,6 +11,7 @@ const getAllMovies = createAsyncThunk(
     async (page, {rejectedWithValue}) => {
         try {
             const {data} = await movieService.getAll(page);
+            console.log(page)
             return data
         } catch (e) {
             rejectedWithValue(e.response.data)
@@ -25,11 +26,11 @@ const movieSlice = createSlice({
     reducers: {
         nextPage: (state, action) => {
             if (state.page < 500) {
-                state.page += action.payload
+                state.page =state.page+action.payload
             }
         },
         prevPage: (state, action) => {
-            if (state.page > 1){state.page -= action.payload}
+            if (state.page > 1){state.page=state.page-action.payload}
         }
 
     },

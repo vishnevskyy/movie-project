@@ -1,0 +1,13 @@
+.SerialList {
+    background-color: #61dafb;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 2px;
+    grid-row-gap: 2px;
+    width: 1000px;
+    margin: 0 auto;
+    justify-content: space-around;
+    align-items: center;
+
+}

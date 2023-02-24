@@ -1,11 +1,11 @@
 import React from 'react';
 
-const TvPage = () => {
+const SeriesPage = () => {
     return (
         <div>
-            TvPage
+            SeriesPage
         </div>
     );
 };
 
-export {TvPage};
+export {SeriesPage};

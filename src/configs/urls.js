@@ -4,7 +4,7 @@ const urls={
     movie: '/movie',
     genre: '/genre',
     list: '/list',
-    tv: '/tv',
+    serials: '/tv',
     trending: '/trending',
     search:'/search',
     multi:'/multi',

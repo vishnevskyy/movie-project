@@ -2,23 +2,37 @@ import React from 'react';
 import {photobaseURL} from "../../../configs/photobaseURL";
 
 import css from './MovieCard.module.css';
-import {Badge, Button, Rating} from "@mui/material";
-const MovieCard = ({movie}) => {
-    return (
-        <div className={css.MovieCard}>
-            <div className={css.Image}>
-                {movie.poster_path &&
-                    <Badge badgeContent={movie.genre_ids[0]} color={"success"} anchorOrigin={{ vertical: 'bottom', horizontal: 'right', }}>
-                <img src={photobaseURL + movie.poster_path} alt=""/>
-                    </Badge>
-                }
-            </div>
-            <div className={css.Title}>
-                <Button>{movie.title}</Button>
-            </div>
+import {Badge, Button, Card, CardMedia, Chip, Rating, Typography} from "@mui/material";
+import {Link, NavLink} from "react-router-dom";
 
-            <Rating name="customized-10" value={movie.vote_average/2} readOnly precision={0.25} max={5} />
-        </div>
+const MovieCard = ({movie}) => {
+    window.scroll(0, 0)
+    console.log(movie.release_date.slice(0, 4));
+    return (
+        <NavLink to={`/movie/${movie.id}`}
+        style={{textDecoration:'none'}}>
+            <Card sx={{
+                minHeight: 440,
+                maxWidth: 230,
+                backgroundColor: "transparent",
+                margin: '5px',
+                boxShadow: '1px 1px 2px black,0 0 1em black,0 0 0.2em black',
+                alignItems: "center",
+                textDecoration: "none",
+                display:"flex",
+                flexDirection:'column'
+            }}>
+                <CardMedia component="img" alt="poster" image={photobaseURL + movie.poster_path}/>
+                <div style={{height:55, padding:'10px',paddingBottom:'0px',justifyContent:'center',alignItems:'center',display:"flex"}}>
+                <Typography sx={{textAlign:'center',fontFamily:'fantasy,serif'}}>{movie.title}</Typography>
+                    {/*<Typography>{movie.}</Typography>*/}
+                </div>
+                <div style={{display:'flex',bottom:0,height:31,paddingBottom:'5px'}}>
+                <Rating sx={{top:'5px'}} name="customized-10" value={movie.vote_average / 2} readOnly precision={0.25} max={5} sx={{display:"flex",bottom:0}}/>
+                <Chip sx={{textDecoration:"none"}} label={movie.release_date.slice(0, 4)}></Chip>
+                </div>
+            </Card>
+        </NavLink>
     );
 };
 
